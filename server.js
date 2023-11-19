@@ -1,19 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+
 const connectDB = require("./database/connection.js");
 const logRoutes = require("./routes/logRoutes");
-const Queue = require("bull");
-const Redis = require("ioredis");
 
 
-
-// Load environment variables
 require("dotenv").config();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(express.static("public"));
 
 // Connect to the database
 const PORT = process.env.PORT || 5000;
