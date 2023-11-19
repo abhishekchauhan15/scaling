@@ -12,14 +12,14 @@ require("dotenv").config();
 app.use(bodyParser.json());
 
 // Connect to the database
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 connectDB(process.env.MONGO_URI);
 
 // Use the log routes
 app.use("/", logRoutes);
 
 
-app.get("/", (req, res) => {
+app.get("/hello", (req, res) => {
   res.send("Hello World");
 });
 

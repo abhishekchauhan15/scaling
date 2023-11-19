@@ -1,4 +1,4 @@
-exports.isValidLog = (logData)=> {
+exports.isValidLog = (logData) => {
   return (
     logData &&
     typeof logData.level === "string" &&
@@ -8,7 +8,7 @@ exports.isValidLog = (logData)=> {
     typeof logData.traceId === "string" &&
     typeof logData.spanId === "string" &&
     typeof logData.commit === "string" &&
-    typeof logData.metadata === "obje`ct" &&
+    typeof logData.metadata === "object" && // Fix the typo here
     typeof logData.metadata.parentResourceId === "string"
   );
-}
+};

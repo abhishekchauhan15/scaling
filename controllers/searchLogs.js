@@ -27,14 +27,14 @@ exports.searchLogs = async (req, res) => {
 
     const query = {};
     validQueryParameters.forEach((param) => {
-      if (param === "message") {
+      if (param === "message" || param === "level") {
         query[param] = new RegExp(req.query[param], "i");
       } else if (param === "timestamp") {
         const { startDate, endDate } = req.query;
         if (startDate && endDate) {
           query[param] = {
-            $gte: new Date(startDate),
-            $lte: new Date(endDate),
+            $gte: new Date(Date.parse(startDate)),
+            $lte: new Date(Date.parse(endDate)),
           };
         }
       } else {

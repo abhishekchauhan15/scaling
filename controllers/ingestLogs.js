@@ -18,23 +18,25 @@ logQueue.process("processLogs", async (job) => {
 // Controller to ingest logs
 exports.ingestLogs = async (req, res) => {
   try {
-    const logsData = req.body;
+    const logData = req.body;
 
-    if (!Array.isArray(logsData)) {
-      return res
-        .status(400)
-        .json({ error: "Invalid log format. Expected an array of logs." });
+    // Ensure logData is an object
+    if (typeof logData !== 'object' || Array.isArray(logData)) {
+      return res.status(400).json({ error: "Invalid log format. Expected an object." });
     }
 
-    // Validate and filter logs
-    const validLogs = logsData.filter((logData) => isValidLog(logData));
+    // Validate the single log
+    if (isValidLog(logData)) {
+      // Enqueue log for asynchronous processing
+      await logQueue.add("processLogs", [logData]); // Wrap the log in an array for consistency
 
-    // Enqueue logs for asynchronous processing
-    await logQueue.add("processLogs", validLogs);
-
-    res.status(201).json({ message: "Logs ingested successfully" });
+      res.status(201).json({ message: "Log ingested successfully" });
+    } else {
+      res.status(400).json({ error: "Invalid log data" });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
+

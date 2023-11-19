@@ -13,6 +13,9 @@ const logSchema = new mongoose.Schema({
   },
 });
 
+// Add index on the timestamp field
+logSchema.index({ timestamp: 1 });
+
 const Log = mongoose.model("Log", logSchema);
 
 module.exports = Log;
