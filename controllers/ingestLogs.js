@@ -1,7 +1,6 @@
 const Log = require("../models/logModel");
 const {isValidLog} = require("../utils/isValidLog");
 const Queue = require("bull");
-const Redis = require("ioredis");
 
 // Bull Queue for log processing
 const logQueue = new Queue("logQueue", {
